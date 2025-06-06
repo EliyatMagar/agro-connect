@@ -1,0 +1,1 @@
+This is admin panel (frontend)
