@@ -1,7 +1,7 @@
 package models
 
 import (
-	"gorm"
+	"gorm.io/gorm"
 )
 
 type TransportSchedule struct {
