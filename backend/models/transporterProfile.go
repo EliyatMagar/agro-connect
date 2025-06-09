@@ -4,7 +4,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type TransportProfile struct {
+type TransporterProfile struct {
 	gorm.Model
 
 	UserID      uint    `json:"user_id"`

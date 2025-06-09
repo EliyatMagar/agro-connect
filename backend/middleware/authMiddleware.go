@@ -73,3 +73,16 @@ func BuyerOnly() gin.HandlerFunc {
 		c.Next()
 	}
 }
+
+// TransporterOnly middleware
+func TransporterOnly() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		role, exists := c.Get("role")
+		if !exists || role != "transporter" {
+			c.JSON(http.StatusForbidden, gin.H{"error": "Access denied. Transporter only."})
+			c.Abort()
+			return
+		}
+		c.Next()
+	}
+}
