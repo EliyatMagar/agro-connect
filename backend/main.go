@@ -35,6 +35,7 @@ func main() {
 
 	//Register routes
 	routes.RegisterUserRoutes(router)
+	routes.RegisterFarmerProfileRoutes(router)
 
 	port := os.Getenv("PORT")
 	if port == "" {
