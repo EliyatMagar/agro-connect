@@ -1,7 +1,9 @@
 package models
 
 import (
-	"gorm"
+	"time"
+
+	"gorm.io/gorm"
 )
 
 type Offer struct {
@@ -12,4 +14,6 @@ type Offer struct {
 	Price      float64 `json:"price"`
 	Status     string  `gorm:"default:'pending'"` // accepted, rejected
 	PickupDate string  `json:"pickup_date"`
+	CreatedAt  time.Time
+	UpdatedAt  time.Time
 }

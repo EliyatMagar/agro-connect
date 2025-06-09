@@ -1,7 +1,9 @@
 package models
 
 import (
-	"gorm"
+	"time"
+
+	"gorm.io/gorm"
 )
 
 type Order struct {
@@ -12,4 +14,6 @@ type Order struct {
 	ProductID uint   `json:"product_id"`
 	OrderDate string `json:"order_date"`
 	Status    string `gorm:"default:'processing'"` // completed, canceled
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }

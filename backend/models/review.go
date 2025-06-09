@@ -1,7 +1,9 @@
 package models
 
 import (
-	"gorm"
+	"time"
+
+	"gorm.io/gorm"
 )
 
 type Review struct {
@@ -11,4 +13,6 @@ type Review struct {
 	Rating     int    `json:"rating"`
 	Comment    string `json:"comment"`
 	OrderID    uint   `json:"order_id"`
+	CreatedAt  time.Time
+	UpdatedAt  time.Time
 }

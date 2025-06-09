@@ -1,7 +1,9 @@
 package models
 
 import (
-	"gorm"
+	"time"
+
+	"gorm.io/gorm"
 )
 
 type Product struct {
@@ -20,4 +22,6 @@ type Product struct {
 	AvailableTo   string  `json:"available_to"`
 	Status        string  `gorm:"default:'available'"` // or "sold"
 	ImageURL      string  `json:"image_url"`
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
 }
