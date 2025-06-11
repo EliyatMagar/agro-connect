@@ -38,6 +38,7 @@ func Connect() {
 		&models.FarmerProfile{},
 		&models.BuyerProfile{},
 		&models.TransporterProfile{},
+		&models.Product{},
 	); err != nil {
 		log.Fatal("Migration failed:", err)
 	}
