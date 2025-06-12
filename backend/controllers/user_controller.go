@@ -124,11 +124,11 @@ func Login(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"token": token,
+		"role":  user.Role,
 		"user": gin.H{
 			"id":    user.ID,
 			"name":  user.FullName,
 			"email": user.Email,
-			"role":  user.Role,
 		},
 	})
 }
