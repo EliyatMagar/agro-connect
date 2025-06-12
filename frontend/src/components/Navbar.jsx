@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiMenu, FiX, FiUser, FiLogOut, FiHome } from "react-icons/fi";
+import {
+  FiMenu,
+  FiX,
+  FiUser,
+  FiLogOut,
+  FiHome,
+  FiShoppingCart,
+} from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import { GiFarmer, GiCargoShip, GiShop } from "react-icons/gi";
 
@@ -47,6 +54,7 @@ export default function Navbar() {
     { name: "Contact", path: "/contact" },
     { name: "Blog", path: "/blog" },
     { name: "Explore", path: "/explore" },
+    { name: "Cart", path: "/cart" }, // 🛒 Cart added
   ];
 
   return (
@@ -60,13 +68,19 @@ export default function Navbar() {
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-6 items-center">
           {navLinks.map((link) => (
-            <Link
+            <motion.div
               key={link.name}
-              to={link.path}
-              className="text-gray-700 hover:text-blue-600"
+              whileHover={{ scale: 1.1 }}
+              className="transition-transform"
             >
-              {link.name}
-            </Link>
+              <Link
+                to={link.path}
+                className="flex items-center gap-1 text-gray-700 hover:text-blue-600"
+              >
+                {link.name === "Cart" && <FiShoppingCart className="text-lg" />}
+                {link.name}
+              </Link>
+            </motion.div>
           ))}
 
           {!isLoggedIn ? (
@@ -141,9 +155,9 @@ export default function Navbar() {
                 key={link.name}
                 to={link.path}
                 onClick={toggleMenu}
-                className="block py-2 text-gray-700 hover:text-blue-600"
+                className="block py-2 text-gray-700 hover:text-blue-600 flex items-center gap-2"
               >
-                {link.name}
+                {link.name === "Cart" && <FiShoppingCart />} {link.name}
               </Link>
             ))}
 
