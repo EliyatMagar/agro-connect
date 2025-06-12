@@ -2,7 +2,10 @@ package controllers
 
 import (
 	"net/http"
+	"path/filepath"
+	"strconv"
 	"strings"
+	"time"
 
 	"agro-connect/database"
 	"agro-connect/models"
@@ -392,4 +395,51 @@ func UpdatePassword(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Password updated successfully"})
+}
+
+// UploadProfilePicture handles profile picture upload and updates user record
+func UploadProfilePicture(c *gin.Context) {
+	// Get the user ID from the context (assuming you set it in middleware)
+	userIDInterface, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "User not authenticated"})
+		return
+	}
+
+	userID := userIDInterface.(uint)
+
+	// Get the uploaded file
+	file, err := c.FormFile("profile_picture")
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "No file is received"})
+		return
+	}
+
+	// Optional: Validate file type/size here
+
+	// Create a unique filename, e.g. userID + timestamp + extension
+	ext := filepath.Ext(file.Filename)
+	fileName := "user_" + strconv.Itoa(int(userID)) + "_" + strconv.FormatInt(time.Now().Unix(), 10) + ext
+
+	// Save the file to the uploads directory
+	savePath := filepath.Join("uploads", fileName)
+	if err := c.SaveUploadedFile(file, savePath); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save file"})
+		return
+	}
+
+	// Update user's ProfilePicture field in database
+	var user models.User
+	if err := database.DB.First(&user, userID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		return
+	}
+
+	user.ProfilePicture = "/" + savePath // relative path accessible via server
+	if err := database.DB.Save(&user).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update user profile picture"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Profile picture uploaded successfully", "profile_picture": user.ProfilePicture})
 }

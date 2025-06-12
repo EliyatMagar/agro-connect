@@ -18,14 +18,18 @@ func RegisterUserRoutes(r *gin.Engine) {
 		auth.GET("/profile", controllers.GetUserProfile)
 		auth.PUT("/profile", controllers.UpdateUserProfile)
 		auth.DELETE("/profile", controllers.DeleteUserProfile)
+
+		// New route for profile picture upload
+		auth.POST("/upload-profile-picture", controllers.UploadProfilePicture)
 	}
 
 	// Admin-only routes
 	admin := r.Group("/admin/users")
 	admin.Use(middleware.AuthMiddleware(), middleware.AdminOnly())
-
-	admin.GET("/", controllers.GetAllUsers)
-	admin.GET("/:id", controllers.GetUserByID)
-	admin.PUT("/:id", controllers.UpdateUserByID)
-	admin.DELETE("/:id", controllers.DeleteUserByID)
+	{
+		admin.GET("/", controllers.GetAllUsers)
+		admin.GET("/:id", controllers.GetUserByID)
+		admin.PUT("/:id", controllers.UpdateUserByID)
+		admin.DELETE("/:id", controllers.DeleteUserByID)
+	}
 }
