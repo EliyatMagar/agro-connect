@@ -15,25 +15,37 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState("");
+  const [username, setUsername] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const userRole = localStorage.getItem("role");
+    const storedUsername = localStorage.getItem("username");
     if (token) {
       setIsLoggedIn(true);
       setRole(userRole || "User");
+      setUsername(storedUsername || "User");
     }
   }, []);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
+    localStorage.removeItem("username");
     setIsLoggedIn(false);
     setDropdownOpen(false);
     navigate("/login");
+  };
+
+  const getDashboardPath = () => {
+    if (role === "farmer") return "/farmer-dashboard";
+    if (role === "buyer") return "/buyer-dashboard";
+    if (role === "transporter") return "/transporter-dashboard";
+    return "/dashboard";
   };
 
   const roleIcon = {
@@ -54,7 +66,7 @@ export default function Navbar() {
     { name: "Contact", path: "/contact" },
     { name: "Blog", path: "/blog" },
     { name: "Explore", path: "/explore" },
-    { name: "Cart", path: "/cart" }, // 🛒 Cart added
+    { name: "Cart", path: "/cart" },
   ];
 
   return (
@@ -106,10 +118,13 @@ export default function Navbar() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
+                    className="absolute right-0 mt-2 w-52 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
                   >
+                    <p className="px-4 py-2 text-sm text-gray-600">
+                      Welcome, <strong>{username}</strong>
+                    </p>
                     <Link
-                      to="/dashboard"
+                      to={getDashboardPath()}
                       className="flex items-center px-4 py-2 hover:bg-gray-100"
                       onClick={() => setDropdownOpen(false)}
                     >
@@ -172,10 +187,10 @@ export default function Navbar() {
             ) : (
               <div className="mt-2 border-t pt-2">
                 <p className="text-gray-700 text-sm mb-1">
-                  Logged in as <strong>{roleLabel[role?.toLowerCase()]}</strong>
+                  Logged in as <strong>{roleLabel[role?.toLowerCase()]}</strong> - {username}
                 </p>
                 <Link
-                  to="/dashboard"
+                  to={getDashboardPath()}
                   onClick={toggleMenu}
                   className="block py-2 text-gray-700 hover:text-blue-600"
                 >

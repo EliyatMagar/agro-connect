@@ -16,9 +16,25 @@ const Login = () => {
         password,
       });
 
-      localStorage.setItem("token", res.data.token);
+      const { token, role, user } = res.data;
+
+      // Store in localStorage
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
+      localStorage.setItem("user", JSON.stringify(user));
+
       alert("Login successful!");
-      navigate("/dashboard");
+
+      // Role-based redirection
+      if (role === "farmer") {
+        navigate("/farmer-dashboard");
+      } else if (role === "buyer") {
+        navigate("/buyer-dashboard");
+      } else if (role === "transporter") {
+        navigate("/transporter-dashboard");
+      } else {
+        alert("Invalid role!");
+      }
     } catch (err) {
       alert(err.response?.data?.message || "Login failed!");
     }
@@ -32,14 +48,20 @@ const Login = () => {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md border border-lime-200"
       >
-        <h2 className="text-3xl font-bold text-center text-green-700 mb-6">Welcome Back 🌱</h2>
+        <h2 className="text-3xl font-bold text-center text-green-700 mb-6">
+          Welcome Back 🌱
+        </h2>
         <p className="text-center text-sm text-gray-500 mb-6">
-          Login to your <span className="text-lime-600 font-semibold">AgroConnect</span> account
+          Login to your{" "}
+          <span className="text-lime-600 font-semibold">AgroConnect</span>{" "}
+          account
         </p>
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-600">Email</label>
+            <label className="block mb-1 text-sm font-medium text-gray-600">
+              Email
+            </label>
             <input
               type="email"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-lime-400 focus:outline-none"
@@ -51,7 +73,9 @@ const Login = () => {
           </div>
 
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-600">Password</label>
+            <label className="block mb-1 text-sm font-medium text-gray-600">
+              Password
+            </label>
             <input
               type="password"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-lime-400 focus:outline-none"
@@ -72,7 +96,10 @@ const Login = () => {
 
         <p className="text-sm mt-5 text-center text-gray-600">
           Don’t have an account?{" "}
-          <Link to="/register" className="text-lime-600 font-medium hover:underline">
+          <Link
+            to="/register"
+            className="text-lime-600 font-medium hover:underline"
+          >
             Sign up here
           </Link>
         </p>
