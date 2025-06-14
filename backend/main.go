@@ -19,9 +19,11 @@ func main() {
 	database.Connect()
 
 	router := gin.Default()
+	router.RedirectTrailingSlash = false
 
 	//Load cors origins form .env
 	allowedOrigins := strings.Split(os.Getenv("CORS_ORIGIN"), ",")
+	log.Println("CORS origins:", allowedOrigins)
 
 	// Apply CORS middleware
 	router.Use(cors.New(cors.Config{

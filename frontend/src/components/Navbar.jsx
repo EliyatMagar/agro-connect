@@ -22,11 +22,11 @@ export default function Navbar() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const userRole = localStorage.getItem("role");
-    const storedUsername = localStorage.getItem("username");
-    if (token) {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    if (token && userRole && userData) {
       setIsLoggedIn(true);
-      setRole(userRole || "User");
-      setUsername(storedUsername || "User");
+      setRole(userRole);
+      setUsername(userData.name || "User");
     }
   }, []);
 
@@ -35,7 +35,7 @@ export default function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
-    localStorage.removeItem("username");
+    localStorage.removeItem("user");
     setIsLoggedIn(false);
     setDropdownOpen(false);
     navigate("/login");
@@ -46,6 +46,13 @@ export default function Navbar() {
     if (role === "buyer") return "/buyer-dashboard";
     if (role === "transporter") return "/transporter-dashboard";
     return "/dashboard";
+  };
+
+  const getProfilePath = () => {
+    if (role === "farmer") return "/farmer-profile";
+    if (role === "buyer") return "/buyer-profile";
+    if (role === "transporter") return "/transporter-profile";
+    return "/profile";
   };
 
   const roleIcon = {
@@ -72,7 +79,6 @@ export default function Navbar() {
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        {/* Logo */}
         <Link to="/" className="text-xl font-bold text-blue-600">
           Agro-connect
         </Link>
@@ -131,7 +137,7 @@ export default function Navbar() {
                       <FiHome className="mr-2" /> Dashboard
                     </Link>
                     <Link
-                      to="/profile"
+                      to={getProfilePath()}
                       className="flex items-center px-4 py-2 hover:bg-gray-100"
                       onClick={() => setDropdownOpen(false)}
                     >
@@ -150,7 +156,7 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile Menu Toggle */}
+        {/* Mobile Toggle */}
         <button className="md:hidden" onClick={toggleMenu}>
           {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
         </button>
@@ -187,7 +193,9 @@ export default function Navbar() {
             ) : (
               <div className="mt-2 border-t pt-2">
                 <p className="text-gray-700 text-sm mb-1">
-                  Logged in as <strong>{roleLabel[role?.toLowerCase()]}</strong> - {username}
+                  Logged in as{" "}
+                  <strong>{roleLabel[role?.toLowerCase()]}</strong> -{" "}
+                  {username}
                 </p>
                 <Link
                   to={getDashboardPath()}
@@ -197,7 +205,7 @@ export default function Navbar() {
                   Dashboard
                 </Link>
                 <Link
-                  to="/profile"
+                  to={getProfilePath()}
                   onClick={toggleMenu}
                   className="block py-2 text-gray-700 hover:text-blue-600"
                 >

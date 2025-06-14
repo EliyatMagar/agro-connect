@@ -2,10 +2,20 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/LoginPage";
 import Register from "./pages/SignupPage";
+
 import FarmerDashboard from "./components/dashboard/FarmerDashboard";
 import BuyerDashboard from "./components/dashboard/BuyerDashboard";
 import TransporterDashboard from "./components/dashboard/TransporterDashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
+
+import ProtectedRoute from "./components/ProtectedRoute"; // general login + role check
+import FarmerProtectedRoute from "./components/RouteProtected/FarmerProtectedRoute"; // checks profile
+
+import FarmerProfile from "./pages/Farmer/FarmerProfile";
+import CreateFarmerProfile from "./pages/Farmer/CreateFarmerProfile";
+
+import TransporterProfile from "./pages/Transporter/TransporterProfile";
+import BuyerProfile from "./pages/Buyer/BuyerProfile";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -16,15 +26,33 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Protected Routes */}
+        {/* Farmer Routes */}
         <Route
-          path="/farmer-dashboard"
+          path="/create-farmer-profile"
           element={
             <ProtectedRoute allowedRoles={["farmer"]}>
-              <FarmerDashboard />
+              <CreateFarmerProfile />
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/farmer-profile"
+          element={
+            <FarmerProtectedRoute>
+              <FarmerProfile />
+            </FarmerProtectedRoute>
+          }
+        />
+        <Route
+          path="/farmer-dashboard"
+          element={
+            <FarmerProtectedRoute>
+              <FarmerDashboard />
+            </FarmerProtectedRoute>
+          }
+        />
+
+        {/* Buyer Routes */}
         <Route
           path="/buyer-dashboard"
           element={
@@ -34,6 +62,16 @@ function App() {
           }
         />
         <Route
+          path="/buyer-profile"
+          element={
+            <ProtectedRoute allowedRoles={["buyer"]}>
+              <BuyerProfile />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Transporter Routes */}
+        <Route
           path="/transporter-dashboard"
           element={
             <ProtectedRoute allowedRoles={["transporter"]}>
@@ -41,6 +79,17 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/transporter-profile"
+          element={
+            <ProtectedRoute allowedRoles={["transporter"]}>
+              <TransporterProfile />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* 404 Not Found */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );

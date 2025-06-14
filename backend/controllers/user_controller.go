@@ -126,9 +126,16 @@ func Login(c *gin.Context) {
 		"token": token,
 		"role":  user.Role,
 		"user": gin.H{
-			"id":    user.ID,
-			"name":  user.FullName,
-			"email": user.Email,
+			"id":              user.ID,
+			"name":            user.FullName,
+			"email":           user.Email,
+			"phone":           user.Phone,
+			"address":         user.Address,
+			"province":        user.Province,
+			"profile-picture": user.ProfilePicture,
+			"verified":        user.Verified,
+			"district":        user.District,
+			"language":        user.Language,
 		},
 	})
 }
