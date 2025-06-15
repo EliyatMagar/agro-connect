@@ -1,141 +1,57 @@
-// src/pages/Farmer/FarmerProfile.jsx
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+import Profile_info from "./Profile_info";
+import Farm_info from "./Farm_info";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom"; // ✅ Import
 
 const FarmerProfile = () => {
-  const [profile, setProfile] = useState(null);
-  const [formData, setFormData] = useState({
-    farm_name: "",
-    farm_size: "",
-    farm_location: "",
-    certifications: "",
-  });
+  const navigate = useNavigate(); // ✅ Initialize
 
-  const token = localStorage.getItem("token");
-  const user = JSON.parse(localStorage.getItem("user"));
-  const userId = user?.id;
-  const farmerName = user?.name;
-
-  useEffect(() => {
-    if (userId) {
-      fetchProfile();
-    }
-  }, [userId]);
-
-  const fetchProfile = async () => {
-    try {
-      const res = await axios.get("http://localhost:8080/farmer-profile/", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = res.data.profiles.find((p) => p.user_id === userId);
-      if (data) {
-        setProfile(data);
-        setFormData({
-          farm_name: data.farm_name,
-          farm_size: data.farm_size,
-          farm_location: data.farm_location,
-          certifications: data.certifications,
-        });
-      }
-    } catch (err) {
-      console.error("Failed to fetch profile", err);
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const payload = {
-      ...formData,
-      user_id: userId,
-      farmer_name: farmerName,
-    };
-
-    try {
-      await axios.put(
-        `http://localhost:8080/farmer-profile/${profile.ID}`,
-        payload,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      alert("Profile updated!");
-    } catch (err) {
-      alert("Error: " + (err.response?.data?.error || "Something went wrong."));
-    }
+  const handleUpdateClick = () => {
+    navigate("/update-farm"); // ✅ Navigate to update page
   };
 
   return (
-    <div className="min-h-screen bg-green-50 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-r from-green-100 via-green-50 to-green-200 p-6">
       <motion.div
-        className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-2xl"
-        initial={{ opacity: 0, y: 20 }}
+        className="max-w-5xl mx-auto bg-white shadow-xl rounded-2xl overflow-hidden grid md:grid-cols-2 gap-6 p-6"
+        initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <h2 className="text-3xl font-bold text-center text-green-700 mb-6">
-          Update Your Farm Profile
-        </h2>
+        <motion.div
+          className="border-r border-green-100 pr-4"
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          <h2 className="text-2xl font-bold text-green-700 mb-4 border-b pb-2">
+            👤 Farmer Info
+          </h2>
+          <Profile_info />
+        </motion.div>
 
-        <form onSubmit={handleSubmit} className="grid gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Farmer Name
-            </label>
-            <input
-              type="text"
-              value={farmerName || ""}
-              disabled
-              className="p-3 border rounded bg-gray-100 cursor-not-allowed w-full"
-            />
-          </div>
-
-          <input
-            type="text"
-            name="farm_name"
-            value={formData.farm_name}
-            onChange={handleChange}
-            placeholder="Farm Name"
-            className="p-3 border rounded"
-            required
-          />
-          <input
-            type="number"
-            name="farm_size"
-            value={formData.farm_size}
-            onChange={handleChange}
-            placeholder="Farm Size (e.g. in Ropani)"
-            className="p-3 border rounded"
-            required
-          />
-          <input
-            type="text"
-            name="farm_location"
-            value={formData.farm_location}
-            onChange={handleChange}
-            placeholder="Farm Location"
-            className="p-3 border rounded"
-            required
-          />
-          <input
-            type="text"
-            name="certifications"
-            value={formData.certifications}
-            onChange={handleChange}
-            placeholder="Certifications (e.g. Organic, GAP)"
-            className="p-3 border rounded"
-          />
-          <button
-            type="submit"
-            className="bg-green-600 text-white py-3 rounded hover:bg-green-700 transition-all"
-          >
-            Update Profile
-          </button>
-        </form>
+        <motion.div
+          className="pl-4"
+          initial={{ x: 20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          <h2 className="text-2xl font-bold text-green-700 mb-4 border-b pb-2">
+            🌾 Farm Details
+          </h2>
+          <Farm_info />
+        </motion.div>
       </motion.div>
+
+      <div className="text-center mt-6">
+        <button
+          onClick={handleUpdateClick}
+          className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg shadow-md transition-all"
+        >
+          ✏️ Update Farm
+        </button>
+      </div>
     </div>
   );
 };

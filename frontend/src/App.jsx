@@ -12,6 +12,7 @@ import FarmerProtectedRoute from "./components/RouteProtected/FarmerProtectedRou
 
 import FarmerProfile from "./pages/Farmer/FarmerProfile";
 import CreateFarmerProfile from "./pages/Farmer/CreateFarmerProfile";
+import Update_farm from "./pages/Farmer/Update_Farm"
 
 import TransporterProfile from "./pages/Transporter/TransporterProfile";
 import BuyerProfile from "./pages/Buyer/BuyerProfile";
@@ -40,6 +41,14 @@ function App() {
           element={
             <FarmerProtectedRoute>
               <FarmerProfile />
+            </FarmerProtectedRoute>
+          }
+        />
+        <Route
+          path="/update-farm"
+          element={
+            <FarmerProtectedRoute>
+              <Update_farm />
             </FarmerProtectedRoute>
           }
         />
