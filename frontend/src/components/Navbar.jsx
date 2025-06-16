@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   FiMenu,
   FiX,
@@ -7,6 +7,8 @@ import {
   FiLogOut,
   FiHome,
   FiShoppingCart,
+  FiChevronDown,
+  FiChevronUp,
 } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import { GiFarmer, GiCargoShip, GiShop } from "react-icons/gi";
@@ -18,6 +20,7 @@ export default function Navbar() {
   const [username, setUsername] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -29,6 +32,11 @@ export default function Navbar() {
       setUsername(userData.name || "User");
     }
   }, []);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -56,9 +64,9 @@ export default function Navbar() {
   };
 
   const roleIcon = {
-    farmer: <GiFarmer className="inline mr-2 text-green-600" />,
-    transporter: <GiCargoShip className="inline mr-2 text-blue-600" />,
-    buyer: <GiShop className="inline mr-2 text-purple-600" />,
+    farmer: <GiFarmer className="inline mr-2 text-green-600" size={18} />,
+    transporter: <GiCargoShip className="inline mr-2 text-blue-600" size={18} />,
+    buyer: <GiShop className="inline mr-2 text-purple-600" size={18} />,
   };
 
   const roleLabel = {
@@ -68,19 +76,19 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { name: "Home", path: "/" },
+    { name: "Home", path: "/", icon: <FiHome className="text-lg" /> },
+    { name: "Explore", path: "/explore" },
+    { name: "Blog", path: "/blog" },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
-    { name: "Blog", path: "/blog" },
-    { name: "Explore", path: "/explore" },
-    { name: "Cart", path: "/cart" },
+    { name: "Cart", path: "/cart", icon: <FiShoppingCart className="text-lg" /> },
   ];
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link to="/" className="text-xl font-bold text-blue-600">
-          Agro-connect
+      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+        <Link to="/" className="flex items-center">
+          <span className="text-2xl font-bold text-green-600">AgroConnect</span>
         </Link>
 
         {/* Desktop Menu */}
@@ -88,34 +96,48 @@ export default function Navbar() {
           {navLinks.map((link) => (
             <motion.div
               key={link.name}
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               className="transition-transform"
             >
               <Link
                 to={link.path}
-                className="flex items-center gap-1 text-gray-700 hover:text-blue-600"
+                className={`flex items-center gap-1 px-2 py-1 rounded-md ${
+                  location.pathname === link.path
+                    ? "text-green-600 font-medium"
+                    : "text-gray-700 hover:text-green-600"
+                }`}
               >
-                {link.name === "Cart" && <FiShoppingCart className="text-lg" />}
+                {link.icon && link.icon}
                 {link.name}
               </Link>
             </motion.div>
           ))}
 
           {!isLoggedIn ? (
-            <Link
-              to="/login"
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-            >
-              Login
-            </Link>
+            <div className="flex gap-3">
+              <Link
+                to="/login"
+                className="bg-green-100 text-green-700 px-4 py-2 rounded-md hover:bg-green-200 transition font-medium"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition font-medium"
+              >
+                Register
+              </Link>
+            </div>
           ) : (
             <div className="relative">
               <button
                 onClick={() => setDropdownOpen((prev) => !prev)}
-                className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+                className="flex items-center gap-2 bg-green-50 text-green-700 px-4 py-2 rounded-md hover:bg-green-100 transition font-medium border border-green-100"
               >
                 {roleIcon[role?.toLowerCase()] || <FiUser />}
-                {roleLabel[role?.toLowerCase()] || "User"}
+                <span className="max-w-[100px] truncate">{username}</span>
+                {dropdownOpen ? <FiChevronUp /> : <FiChevronDown />}
               </button>
 
               <AnimatePresence>
@@ -124,30 +146,35 @@ export default function Navbar() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="absolute right-0 mt-2 w-52 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
+                    className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden"
+                    onClick={() => setDropdownOpen(false)}
                   >
-                    <p className="px-4 py-2 text-sm text-gray-600">
-                      Welcome, <strong>{username}</strong>
-                    </p>
+                    <div className="px-4 py-3 border-b">
+                      <p className="text-sm font-medium text-gray-900 truncate">
+                        {username}
+                      </p>
+                      <p className="text-xs text-gray-500 flex items-center">
+                        {roleIcon[role?.toLowerCase()]}
+                        {roleLabel[role?.toLowerCase()] || "User"}
+                      </p>
+                    </div>
                     <Link
                       to={getDashboardPath()}
-                      className="flex items-center px-4 py-2 hover:bg-gray-100"
-                      onClick={() => setDropdownOpen(false)}
+                      className="flex items-center px-4 py-3 hover:bg-gray-50 transition"
                     >
-                      <FiHome className="mr-2" /> Dashboard
+                      <FiHome className="mr-3 text-gray-500" /> Dashboard
                     </Link>
                     <Link
                       to={getProfilePath()}
-                      className="flex items-center px-4 py-2 hover:bg-gray-100"
-                      onClick={() => setDropdownOpen(false)}
+                      className="flex items-center px-4 py-3 hover:bg-gray-50 transition"
                     >
-                      <FiUser className="mr-2" /> Profile
+                      <FiUser className="mr-3 text-gray-500" /> Profile
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="flex items-center w-full px-4 py-2 text-left hover:bg-gray-100"
+                      className="flex items-center w-full px-4 py-3 text-left hover:bg-gray-50 transition text-red-600"
                     >
-                      <FiLogOut className="mr-2" /> Logout
+                      <FiLogOut className="mr-3" /> Logout
                     </button>
                   </motion.div>
                 )}
@@ -157,7 +184,11 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Toggle */}
-        <button className="md:hidden" onClick={toggleMenu}>
+        <button
+          className="md:hidden p-2 rounded-md hover:bg-gray-100 transition"
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+        >
           {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
         </button>
       </div>
@@ -169,59 +200,72 @@ export default function Navbar() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="md:hidden px-4 pb-4 overflow-hidden"
+            transition={{ duration: 0.2 }}
+            className="md:hidden bg-gray-50 border-t"
           >
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                onClick={toggleMenu}
-                className="block py-2 text-gray-700 hover:text-blue-600 flex items-center gap-2"
-              >
-                {link.name === "Cart" && <FiShoppingCart />} {link.name}
-              </Link>
-            ))}
+            <div className="container mx-auto px-4 py-3">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className={`flex items-center gap-3 py-3 px-2 rounded-md ${
+                    location.pathname === link.path
+                      ? "text-green-600 bg-green-50 font-medium"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  {link.icon && link.icon}
+                  {link.name}
+                </Link>
+              ))}
 
-            {!isLoggedIn ? (
-              <Link
-                to="/login"
-                onClick={toggleMenu}
-                className="block mt-2 bg-blue-600 text-white text-center px-4 py-2 rounded hover:bg-blue-700 transition"
-              >
-                Login
-              </Link>
-            ) : (
-              <div className="mt-2 border-t pt-2">
-                <p className="text-gray-700 text-sm mb-1">
-                  Logged in as{" "}
-                  <strong>{roleLabel[role?.toLowerCase()]}</strong> -{" "}
-                  {username}
-                </p>
-                <Link
-                  to={getDashboardPath()}
-                  onClick={toggleMenu}
-                  className="block py-2 text-gray-700 hover:text-blue-600"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  to={getProfilePath()}
-                  onClick={toggleMenu}
-                  className="block py-2 text-gray-700 hover:text-blue-600"
-                >
-                  Profile
-                </Link>
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    toggleMenu();
-                  }}
-                  className="block w-full text-left py-2 text-gray-700 hover:text-red-600"
-                >
-                  Logout
-                </button>
-              </div>
-            )}
+              {!isLoggedIn ? (
+                <div className="flex gap-3 mt-4">
+                  <Link
+                    to="/login"
+                    className="flex-1 text-center bg-green-100 text-green-700 px-4 py-2 rounded-md hover:bg-green-200 transition font-medium"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="flex-1 text-center bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition font-medium"
+                  >
+                    Register
+                  </Link>
+                </div>
+              ) : (
+                <div className="mt-4 pt-4 border-t">
+                  <div className="px-2 mb-3">
+                    <p className="text-sm font-medium text-gray-900 truncate">
+                      {username}
+                    </p>
+                    <p className="text-xs text-gray-500 flex items-center">
+                      {roleIcon[role?.toLowerCase()]}
+                      {roleLabel[role?.toLowerCase()] || "User"}
+                    </p>
+                  </div>
+                  <Link
+                    to={getDashboardPath()}
+                    className="flex items-center gap-3 py-3 px-2 rounded-md text-gray-700 hover:bg-gray-100"
+                  >
+                    <FiHome /> Dashboard
+                  </Link>
+                  <Link
+                    to={getProfilePath()}
+                    className="flex items-center gap-3 py-3 px-2 rounded-md text-gray-700 hover:bg-gray-100"
+                  >
+                    <FiUser /> Profile
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-3 w-full py-3 px-2 rounded-md text-left text-red-600 hover:bg-gray-100"
+                  >
+                    <FiLogOut /> Logout
+                  </button>
+                </div>
+              )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
