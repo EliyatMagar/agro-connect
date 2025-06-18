@@ -17,6 +17,8 @@ import Update_farm from "./pages/Farmer/Update_Farm"
 import TransporterProfile from "./pages/Transporter/TransporterProfile";
 import BuyerProfile from "./pages/Buyer/BuyerProfile";
 import NotFound from "./pages/NotFound";
+import AboutPage from "./pages/About";
+import ContactPage from "./pages/Contact";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/about" element={<AboutPage/>} />
+        <Route path="/contact" element={<ContactPage/>} />
 
         {/* Farmer Routes */}
         <Route

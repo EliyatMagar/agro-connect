@@ -78,9 +78,9 @@ export default function Navbar() {
   const navLinks = [
     { name: "Home", path: "/", icon: <FiHome className="text-lg" /> },
     { name: "Explore", path: "/explore" },
-    { name: "Blog", path: "/blog" },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
+    { name: "Blog", path: "/blog" },
     { name: "Cart", path: "/cart", icon: <FiShoppingCart className="text-lg" /> },
   ];
 
