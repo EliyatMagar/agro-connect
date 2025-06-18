@@ -3,22 +3,26 @@ import Home from "./pages/Home";
 import Login from "./pages/LoginPage";
 import Register from "./pages/SignupPage";
 
-import FarmerDashboard from "./components/dashboard/FarmerDashboard";
-import BuyerDashboard from "./components/dashboard/BuyerDashboard";
-import TransporterDashboard from "./components/dashboard/TransporterDashboard";
+import FarmerDashboard from "./components/Dashboard/Farmer/FarmerDashboard";
+import BuyerDashboard from "./components/Dashboard/Buyer/BuyerDashboard";
+import TransporterDashboard from "./components/Dashboard/Transporter/TransporterDashboard";
 
 import ProtectedRoute from "./components/ProtectedRoute"; // general login + role check
-import FarmerProtectedRoute from "./components/RouteProtected/FarmerProtectedRoute"; // checks profile
+import FarmerProtectedRoute from "./components/RouteProtected/Farmer/FarmerProtectedRoute"; // checks profile
 
 import FarmerProfile from "./pages/Farmer/FarmerProfile";
 import CreateFarmerProfile from "./pages/Farmer/CreateFarmerProfile";
-import Update_farm from "./pages/Farmer/Update_Farm"
+import Update_farm from "./pages/Farmer/Update_Farm";
+import AddProducts from "./components/Dashboard/Farmer/Products/AddProducts";
+import ManageProducts from "./components/Dashboard/Farmer/Products/ManageProducts";
 
 import TransporterProfile from "./pages/Transporter/TransporterProfile";
 import BuyerProfile from "./pages/Buyer/BuyerProfile";
 import NotFound from "./pages/NotFound";
 import AboutPage from "./pages/About";
 import ContactPage from "./pages/Contact";
+
+import ProductsList from "./components/Products/ProductList/ProductsList";
 
 function App() {
   return (
@@ -28,8 +32,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/about" element={<AboutPage/>} />
-        <Route path="/contact" element={<ContactPage/>} />
+
+        <>
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </>
+        <Route path="getallproducts" element={<ProductsList />} />
 
         {/* Farmer Routes */}
         <Route
@@ -62,6 +70,22 @@ function App() {
             <FarmerProtectedRoute>
               <FarmerDashboard />
             </FarmerProtectedRoute>
+          }
+        />
+        <Route
+          path="/products/addproductsByFarmer"
+          element={
+            <ProtectedRoute allowedRoles={["farmer"]}>
+              <AddProducts />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/products/manage"
+          element={
+            <ProtectedRoute allowedRoles={["farmer"]}>
+              <ManageProducts />
+            </ProtectedRoute>
           }
         />
 
