@@ -10,15 +10,27 @@ import (
 func RegisterProductRoutes(router *gin.Engine) {
 	productGroup := router.Group("/products")
 
-	// Public Routes
+	// Public routes
 	productGroup.GET("/", controllers.GetAllProducts)
 	productGroup.GET("/:id", controllers.GetProductByID)
 
-	// Protected Routes (Farmer only)
-	productGroup.Use(middleware.AuthMiddleware(), middleware.FarmerOnly())
+	// Temporary route for testing
+	productGroup.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{"message": "products live"})
+	})
+
+	// Protected routes
+	productGroup.Use(middleware.AuthMiddleware())
 	{
-		productGroup.POST("/", controllers.CreateProduct)
-		productGroup.PUT("/:id", controllers.UpdateProduct)
-		productGroup.DELETE("/:id", controllers.DeleteProduct)
+		// Routes accessible by any authenticated user
+		productGroup.GET("/user", controllers.GetProductsByUserID)
+
+		// Routes accessible only by farmers
+		productGroup.Use(middleware.FarmerOnly())
+		{
+			productGroup.POST("/", controllers.CreateProduct)
+			productGroup.PUT("/:id", controllers.UpdateProduct)
+			productGroup.DELETE("/:id", controllers.DeleteProduct)
+		}
 	}
 }

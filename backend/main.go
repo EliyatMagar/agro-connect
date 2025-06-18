@@ -21,6 +21,8 @@ func main() {
 	router := gin.Default()
 	router.RedirectTrailingSlash = false
 
+	router.Static("/uploads", "./uploads")
+
 	//Load cors origins form .env
 	allowedOrigins := strings.Split(os.Getenv("CORS_ORIGIN"), ",")
 	log.Println("CORS origins:", allowedOrigins)

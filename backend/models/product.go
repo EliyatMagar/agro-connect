@@ -14,13 +14,13 @@ type Product struct {
 	NameNp        string  `json:"name_np"`
 	DescriptionEn string  `json:"description_en"`
 	DescriptionNp string  `json:"description_np"`
-	Category      string  `json:"category"` //Vegetables, fruits, Dairy, etc.
+	Category      string  `json:"category"`
 	Quantity      float64 `json:"quantity"`
-	Uint          string  `json:"uint"` //Kg, litre, etc.
+	Unit          string  `json:"unit"` // ✅ fixed typo here
 	PricePerUnit  float64 `json:"price_per_unit"`
 	AvailableFrom string  `json:"available_from"`
 	AvailableTo   string  `json:"available_to"`
-	Status        string  `gorm:"default:'available'"` // or "sold"
+	Status        string  `gorm:"default:'available'"`
 	ImageURL      string  `json:"image_url"`
 	CreatedAt     time.Time
 	UpdatedAt     time.Time

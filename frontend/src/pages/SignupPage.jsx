@@ -56,7 +56,7 @@ const Signup = () => {
       });
 
       alert("Signup successful!");
-      navigate("/");
+      navigate("/login");
     } catch (err) {
       alert(err.response?.data?.message || "Signup failed!");
     } finally {
