@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { motion } from 'framer-motion';
 import { FiArrowLeft, FiUpload, FiPlus } from 'react-icons/fi';
+=======
+>>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -20,6 +23,7 @@ const AddProduct = () => {
   });
   const [image, setImage] = useState(null);
   const [error, setError] = useState('');
+<<<<<<< HEAD
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Animation variants
@@ -46,6 +50,15 @@ const AddProduct = () => {
     { value: 'dairy', label: 'Dairy Product', icon: '🥛' },
     { value: 'meat', label: 'Meat', icon: '🍗' },
     { value: 'other', label: 'Other', icon: '🌾' }
+=======
+
+  const categories = [
+    { value: 'vegetable', label: 'Vegetable' },
+    { value: 'fruit', label: 'Fruit' },
+    { value: 'dairy', label: 'Dairy Product' },
+    { value: 'meat', label: 'Meat' },
+    { value: 'other', label: 'Other' }
+>>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
   ];
 
   const units = {
@@ -110,7 +123,10 @@ const AddProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+<<<<<<< HEAD
     setIsSubmitting(true);
+=======
+>>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
 
     try {
       // Convert to backend expected format
@@ -154,12 +170,19 @@ const AddProduct = () => {
 
       const result = await response.json();
       console.log('Product created:', result);
+<<<<<<< HEAD
       navigate('/products');
     } catch (err) {
       setError(err.message);
       console.error('Error creating product:', err);
     } finally {
       setIsSubmitting(false);
+=======
+      navigate('/getallproducts');
+    } catch (err) {
+      setError(err.message);
+      console.error('Error creating product:', err);
+>>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
     }
   };
 
@@ -168,6 +191,7 @@ const AddProduct = () => {
   };
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen bg-green-50 p-4 md:p-6">
       <motion.div 
         initial={{ opacity: 0 }}
@@ -486,6 +510,173 @@ const AddProduct = () => {
           </motion.form>
         </div>
       </motion.div>
+=======
+    <div className="max-w-2xl mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-6">Add New Product</h1>
+      
+      {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">{error}</div>}
+      
+      <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Name (English)</label>
+            <input
+              type="text"
+              name="NameEn"
+              value={product.NameEn}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Name (Nepali)</label>
+            <input
+              type="text"
+              name="NameNp"
+              value={product.NameNp}
+              onChange={handleChange}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Description (English)</label>
+            <textarea
+              name="DescriptionEn"
+              value={product.DescriptionEn}
+              onChange={handleChange}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Description (Nepali)</label>
+            <textarea
+              name="DescriptionNp"
+              value={product.DescriptionNp}
+              onChange={handleChange}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Category</label>
+            <select
+              name="Category"
+              value={product.Category}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            >
+              <option value="">Select a category</option>
+              {categories.map((category) => (
+                <option key={category.value} value={category.value}>
+                  {category.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Quantity</label>
+            <input
+              type="number"
+              name="Quantity"
+              value={product.Quantity}
+              onChange={handleChange}
+              required
+              min="0"
+              step="0.01"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Unit</label>
+            <select
+              name="Unit"
+              value={product.Unit}
+              onChange={handleChange}
+              required
+              disabled={!product.Category}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100"
+            >
+              <option value="">Select a unit</option>
+              {getCurrentUnits().map((unit) => (
+                <option key={unit.value} value={unit.value}>
+                  {unit.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Price Per Unit</label>
+            <input
+              type="number"
+              name="PricePerUnit"
+              value={product.PricePerUnit}
+              onChange={handleChange}
+              required
+              min="0"
+              step="0.01"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Available From</label>
+            <input
+              type="date"
+              name="AvailableFrom"
+              value={product.AvailableFrom}
+              onChange={handleChange}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Available To</label>
+            <input
+              type="date"
+              name="AvailableTo"
+              value={product.AvailableTo}
+              onChange={handleChange}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Product Image</label>
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleImageChange}
+            required
+            className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+          />
+        </div>
+
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Add Product
+          </button>
+        </div>
+      </form>
+>>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
     </div>
   );
 };

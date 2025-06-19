@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaLeaf, FaChartLine, FaCheckCircle, FaTimesCircle, FaTractor, FaSeedling, FaWarehouse } from 'react-icons/fa';
+import { FaLeaf, FaChartLine, FaCheckCircle, FaTimesCircle, FaTractor, FaSeedling, FaWarehouse, FaBox } from 'react-icons/fa';
 
 const StatsCard = ({ 
   title, 
@@ -17,10 +17,14 @@ const StatsCard = ({
     amber: 'bg-amber-50 text-amber-700',
     teal: 'bg-teal-50 text-teal-700',
     emerald: 'bg-emerald-50 text-emerald-700',
-    yellow: 'bg-yellow-50 text-yellow-700'
+    yellow: 'bg-yellow-50 text-yellow-700',
+    indigo: 'bg-indigo-50 text-indigo-700',
+    red: 'bg-red-50 text-red-700',
+    purple: 'bg-purple-50 text-purple-700',
+    blue: 'bg-blue-50 text-blue-700'
   };
 
-  // Icon components - updated with farming icons
+  // Icon components - merged both sets
   const iconComponents = {
     leaf: <FaLeaf />,
     chart: <FaChartLine />,
@@ -28,14 +32,15 @@ const StatsCard = ({
     cancel: <FaTimesCircle />,
     tractor: <FaTractor />,
     seedling: <FaSeedling />,
-    warehouse: <FaWarehouse />
+    warehouse: <FaWarehouse />,
+    box: <FaBox />
   };
 
   // Determine icon to display
   const displayIcon = typeof icon === 'string' ? iconComponents[icon] || iconComponents.leaf : icon;
 
   return (
-    <div className={`rounded-xl shadow-sm p-5 ${colorVariants[color] || colorVariants.green} border border-${color}-100`}>
+    <div className={`rounded-xl shadow-sm p-5 ${colorVariants[color] || colorVariants.green}`}>
       <div className="flex justify-between items-start">
         <div>
           <p className="text-sm font-medium opacity-80">{title}</p>
@@ -45,7 +50,7 @@ const StatsCard = ({
             <p className="text-2xl font-bold mt-1">{value}</p>
           )}
         </div>
-        <div className={`p-3 rounded-lg bg-white bg-opacity-30 text-${color}-600`}>
+        <div className={`p-3 rounded-lg bg-white bg-opacity-30`}>
           {displayIcon}
         </div>
       </div>
@@ -69,17 +74,5 @@ const StatsCard = ({
     </div>
   );
 };
-
-// Example usage:
-/*
-<StatsCard 
-  title="Total Crops" 
-  value={45} 
-  icon="seedling" 
-  color="green"
-  trend="up"
-  percentage={12.5}
-/>
-*/ 
 
 export default StatsCard;
