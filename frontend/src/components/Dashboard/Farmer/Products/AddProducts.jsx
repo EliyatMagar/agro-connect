@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
 import { motion } from 'framer-motion';
 import { FiArrowLeft, FiUpload, FiPlus } from 'react-icons/fi';
-=======
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -23,7 +20,6 @@ const AddProduct = () => {
   });
   const [image, setImage] = useState(null);
   const [error, setError] = useState('');
-<<<<<<< HEAD
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Animation variants
@@ -50,15 +46,6 @@ const AddProduct = () => {
     { value: 'dairy', label: 'Dairy Product', icon: '🥛' },
     { value: 'meat', label: 'Meat', icon: '🍗' },
     { value: 'other', label: 'Other', icon: '🌾' }
-=======
-
-  const categories = [
-    { value: 'vegetable', label: 'Vegetable' },
-    { value: 'fruit', label: 'Fruit' },
-    { value: 'dairy', label: 'Dairy Product' },
-    { value: 'meat', label: 'Meat' },
-    { value: 'other', label: 'Other' }
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
   ];
 
   const units = {
@@ -123,10 +110,7 @@ const AddProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-<<<<<<< HEAD
     setIsSubmitting(true);
-=======
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
 
     try {
       // Convert to backend expected format
@@ -170,19 +154,12 @@ const AddProduct = () => {
 
       const result = await response.json();
       console.log('Product created:', result);
-<<<<<<< HEAD
-      navigate('/products');
+      navigate('/farmer-dashboard');
     } catch (err) {
       setError(err.message);
       console.error('Error creating product:', err);
     } finally {
       setIsSubmitting(false);
-=======
-      navigate('/getallproducts');
-    } catch (err) {
-      setError(err.message);
-      console.error('Error creating product:', err);
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
     }
   };
 
@@ -191,8 +168,7 @@ const AddProduct = () => {
   };
 
   return (
-<<<<<<< HEAD
-    <div className="min-h-screen bg-green-50 p-4 md:p-6">
+    <div className="min-h-screen bg-gray-50 p-4 md:p-6">
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -200,17 +176,17 @@ const AddProduct = () => {
         className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden"
       >
         {/* Header with back button */}
-        <div className="bg-green-600 p-4 flex items-center">
+        <div className="bg-indigo-600 p-4 flex items-center">
           <button 
             onClick={() => navigate(-1)}
-            className="p-2 rounded-full bg-green-700 text-white hover:bg-green-800 transition-colors mr-4"
+            className="p-2 rounded-full bg-indigo-700 text-white hover:bg-indigo-800 transition-colors mr-4"
             aria-label="Go back"
           >
             <FiArrowLeft className="w-5 h-5" />
           </button>
           <div>
             <h1 className="text-2xl font-bold text-white">Add New Farm Product</h1>
-            <p className="text-green-100">Fill in details about your fresh produce</p>
+            <p className="text-indigo-100">Fill in details about your fresh produce</p>
           </div>
         </div>
 
@@ -236,7 +212,7 @@ const AddProduct = () => {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <motion.div variants={itemVariants}>
-                <label className="block text-sm font-medium text-green-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
                   Product Name (English) <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -246,12 +222,12 @@ const AddProduct = () => {
                   onChange={handleChange}
                   required
                   placeholder="e.g. Fresh Tomatoes"
-                  className="mt-1 block w-full border border-green-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </motion.div>
               
               <motion.div variants={itemVariants}>
-                <label className="block text-sm font-medium text-green-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
                   Product Name (Nepali)
                 </label>
                 <input
@@ -260,14 +236,14 @@ const AddProduct = () => {
                   value={product.NameNp}
                   onChange={handleChange}
                   placeholder="e.g. ताजा गोलभेंडा"
-                  className="mt-1 block w-full border border-green-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </motion.div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <motion.div variants={itemVariants}>
-                <label className="block text-sm font-medium text-green-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
                   Description (English)
                 </label>
                 <textarea
@@ -276,12 +252,12 @@ const AddProduct = () => {
                   onChange={handleChange}
                   placeholder="Describe your product (organic, fresh, etc.)"
                   rows="3"
-                  className="mt-1 block w-full border border-green-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </motion.div>
               
               <motion.div variants={itemVariants}>
-                <label className="block text-sm font-medium text-green-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
                   Description (Nepali)
                 </label>
                 <textarea
@@ -290,15 +266,15 @@ const AddProduct = () => {
                   onChange={handleChange}
                   placeholder="उत्पादनको बारेमा विवरण (जैविक, ताजा, आदि)"
                   rows="3"
-                  className="mt-1 block w-full border border-green-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </motion.div>
             </div>
 
-            <motion.div variants={itemVariants} className="bg-green-50 p-4 rounded-lg border border-green-100">
-              <h3 className="text-lg font-medium text-green-800 mb-4 flex items-center">
-                <span className="bg-green-100 p-2 rounded-full mr-3">
-                  <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <motion.div variants={itemVariants} className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+              <h3 className="text-lg font-medium text-gray-800 mb-4 flex items-center">
+                <span className="bg-gray-100 p-2 rounded-full mr-3">
+                  <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
                   </svg>
                 </span>
@@ -306,7 +282,7 @@ const AddProduct = () => {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-green-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
                     Category <span className="text-red-500">*</span>
                   </label>
                   <select
@@ -314,7 +290,7 @@ const AddProduct = () => {
                     value={product.Category}
                     onChange={handleChange}
                     required
-                    className="mt-1 block w-full border border-green-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   >
                     <option value="">Select category</option>
                     {categories.map((category) => (
@@ -326,7 +302,7 @@ const AddProduct = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-green-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
                     Quantity <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -338,12 +314,12 @@ const AddProduct = () => {
                     min="0"
                     step="0.01"
                     placeholder="0.00"
-                    className="mt-1 block w-full border border-green-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-green-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
                     Unit <span className="text-red-500">*</span>
                   </label>
                   <select
@@ -352,7 +328,7 @@ const AddProduct = () => {
                     onChange={handleChange}
                     required
                     disabled={!product.Category}
-                    className="mt-1 block w-full border border-green-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-green-100"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100"
                   >
                     <option value="">Select unit</option>
                     {getCurrentUnits().map((unit) => (
@@ -365,10 +341,10 @@ const AddProduct = () => {
               </div>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="bg-green-50 p-4 rounded-lg border border-green-100">
-              <h3 className="text-lg font-medium text-green-800 mb-4 flex items-center">
-                <span className="bg-green-100 p-2 rounded-full mr-3">
-                  <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <motion.div variants={itemVariants} className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+              <h3 className="text-lg font-medium text-gray-800 mb-4 flex items-center">
+                <span className="bg-gray-100 p-2 rounded-full mr-3">
+                  <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
                 </span>
@@ -376,7 +352,7 @@ const AddProduct = () => {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-green-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
                     Price Per Unit (Rs.) <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -388,12 +364,12 @@ const AddProduct = () => {
                     min="0"
                     step="0.01"
                     placeholder="0.00"
-                    className="mt-1 block w-full border border-green-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-green-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
                     Available From
                   </label>
                   <input
@@ -401,12 +377,12 @@ const AddProduct = () => {
                     name="AvailableFrom"
                     value={product.AvailableFrom}
                     onChange={handleChange}
-                    className="mt-1 block w-full border border-green-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-green-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
                     Available To
                   </label>
                   <input
@@ -414,20 +390,20 @@ const AddProduct = () => {
                     name="AvailableTo"
                     value={product.AvailableTo}
                     onChange={handleChange}
-                    className="mt-1 block w-full border border-green-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   />
                 </div>
               </div>
             </motion.div>
 
             <motion.div variants={itemVariants}>
-              <label className="block text-sm font-medium text-green-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Product Image <span className="text-red-500">*</span>
               </label>
-              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-green-300 border-dashed rounded-md">
+              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                 <div className="space-y-1 text-center">
                   <svg
-                    className="mx-auto h-12 w-12 text-green-400"
+                    className="mx-auto h-12 w-12 text-gray-400"
                     stroke="currentColor"
                     fill="none"
                     viewBox="0 0 48 48"
@@ -440,10 +416,10 @@ const AddProduct = () => {
                       strokeLinejoin="round"
                     />
                   </svg>
-                  <div className="flex text-sm text-green-600 justify-center">
+                  <div className="flex text-sm text-gray-600 justify-center">
                     <label
                       htmlFor="file-upload"
-                      className="relative cursor-pointer bg-white rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-green-500"
+                      className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                     >
                       <span>Upload a photo</span>
                       <input
@@ -458,7 +434,7 @@ const AddProduct = () => {
                     </label>
                     <p className="pl-1">or drag and drop</p>
                   </div>
-                  <p className="text-xs text-green-500">
+                  <p className="text-xs text-gray-500">
                     PNG, JPG up to 5MB
                   </p>
                 </div>
@@ -467,7 +443,7 @@ const AddProduct = () => {
                 <motion.div 
                   initial={{ scale: 0.9 }}
                   animate={{ scale: 1 }}
-                  className="mt-2 text-sm text-green-600 flex items-center"
+                  className="mt-2 text-sm text-gray-600 flex items-center"
                 >
                   <FiUpload className="mr-2" />
                   Selected: {image.name}
@@ -477,19 +453,19 @@ const AddProduct = () => {
 
             <motion.div 
               variants={itemVariants}
-              className="flex justify-end pt-4 border-t border-green-100"
+              className="flex justify-end pt-4 border-t border-gray-200"
             >
               <button
                 type="button"
                 onClick={() => navigate(-1)}
-                className="mr-4 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                className="mr-4 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-300 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
+                className={`inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-300 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
               >
                 {isSubmitting ? (
                   <>
@@ -510,173 +486,6 @@ const AddProduct = () => {
           </motion.form>
         </div>
       </motion.div>
-=======
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-6">Add New Product</h1>
-      
-      {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">{error}</div>}
-      
-      <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Name (English)</label>
-            <input
-              type="text"
-              name="NameEn"
-              value={product.NameEn}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Name (Nepali)</label>
-            <input
-              type="text"
-              name="NameNp"
-              value={product.NameNp}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Description (English)</label>
-            <textarea
-              name="DescriptionEn"
-              value={product.DescriptionEn}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Description (Nepali)</label>
-            <textarea
-              name="DescriptionNp"
-              value={product.DescriptionNp}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Category</label>
-            <select
-              name="Category"
-              value={product.Category}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            >
-              <option value="">Select a category</option>
-              {categories.map((category) => (
-                <option key={category.value} value={category.value}>
-                  {category.label}
-                </option>
-              ))}
-            </select>
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Quantity</label>
-            <input
-              type="number"
-              name="Quantity"
-              value={product.Quantity}
-              onChange={handleChange}
-              required
-              min="0"
-              step="0.01"
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Unit</label>
-            <select
-              name="Unit"
-              value={product.Unit}
-              onChange={handleChange}
-              required
-              disabled={!product.Category}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100"
-            >
-              <option value="">Select a unit</option>
-              {getCurrentUnits().map((unit) => (
-                <option key={unit.value} value={unit.value}>
-                  {unit.label}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Price Per Unit</label>
-            <input
-              type="number"
-              name="PricePerUnit"
-              value={product.PricePerUnit}
-              onChange={handleChange}
-              required
-              min="0"
-              step="0.01"
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Available From</label>
-            <input
-              type="date"
-              name="AvailableFrom"
-              value={product.AvailableFrom}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Available To</label>
-            <input
-              type="date"
-              name="AvailableTo"
-              value={product.AvailableTo}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Product Image</label>
-          <input
-            type="file"
-            name="image"
-            accept="image/*"
-            onChange={handleImageChange}
-            required
-            className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
-          />
-        </div>
-
-        <div className="flex justify-end">
-          <button
-            type="submit"
-            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Add Product
-          </button>
-        </div>
-      </form>
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
     </div>
   );
 };

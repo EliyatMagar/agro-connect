@@ -1,31 +1,23 @@
 import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
 import { 
   FaBars, FaSearch, FaBell, FaEnvelope, 
   FaUserCog, FaSignOutAlt, FaLeaf, FaTractor,
   FaSun, FaCloudRain
 } from 'react-icons/fa';
-=======
-import { FaBars, FaSearch, FaBell, FaEnvelope, FaCog, FaSignOutAlt } from 'react-icons/fa';
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const DashboardHeader = ({ toggleSidebar }) => {
   const [user, setUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [notifications, setNotifications] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
-<<<<<<< HEAD
   const [weather, setWeather] = useState({ temp: '24°C', condition: 'Sunny' });
-=======
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
   const navigate = useNavigate();
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('user'));
     setUser(userData);
     
-<<<<<<< HEAD
     // Simulate farmer-specific notifications
     const mockNotifications = [
       { id: 1, message: 'New order for your wheat', read: false, time: '15 mins ago' },
@@ -42,25 +34,12 @@ const DashboardHeader = ({ toggleSidebar }) => {
       { temp: '19°C', condition: 'Rainy', icon: <FaCloudRain className="text-blue-400" /> }
     ];
     setWeather(weatherConditions[Math.floor(Math.random() * weatherConditions.length)]);
-=======
-    // Simulate fetching notifications
-    const mockNotifications = [
-      { id: 1, message: 'New order received', read: false, time: '2 mins ago' },
-      { id: 2, message: 'Product approved', read: true, time: '1 hour ago' },
-      { id: 3, message: 'System update available', read: false, time: '3 days ago' }
-    ];
-    setNotifications(mockNotifications);
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
   }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-<<<<<<< HEAD
       navigate(`/farm-search?q=${encodeURIComponent(searchQuery)}`);
-=======
-      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
       setSearchQuery('');
     }
   };
@@ -68,17 +47,12 @@ const DashboardHeader = ({ toggleSidebar }) => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-<<<<<<< HEAD
     navigate('/farmer-login');
-=======
-    navigate('/login');
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
   };
 
   const unreadNotifications = notifications.filter(n => !n.read).length;
 
   return (
-<<<<<<< HEAD
     <header className="bg-green-700 text-white shadow-md sticky top-0 z-40">
       <div className="flex items-center justify-between px-4 py-3">
         {/* Left side - Menu button and weather */}
@@ -106,27 +80,6 @@ const DashboardHeader = ({ toggleSidebar }) => {
               type="text"
               placeholder="Search crops, orders, tools..."
               className="pl-10 pr-4 py-2 w-64 bg-green-600 text-white placeholder-green-200 border border-green-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:border-transparent"
-=======
-    <header className="bg-white shadow-sm sticky top-0 z-40">
-      <div className="flex items-center justify-between px-4 py-3">
-        {/* Left side - Menu button */}
-        <div className="flex items-center">
-          <button 
-            onClick={toggleSidebar} 
-            className="md:hidden p-2 rounded-full hover:bg-gray-100 mr-2"
-            aria-label="Toggle sidebar"
-          >
-            <FaBars className="text-xl text-gray-600" />
-          </button>
-          
-          {/* Search bar */}
-          <form onSubmit={handleSearch} className="hidden md:block relative ml-4">
-            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search products, orders..."
-              className="pl-10 pr-4 py-2 w-64 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -136,36 +89,21 @@ const DashboardHeader = ({ toggleSidebar }) => {
         {/* Right side - User controls */}
         <div className="flex items-center space-x-4">
           {/* Notification and Messages */}
-<<<<<<< HEAD
           <button className="p-2 relative rounded-full hover:bg-green-600">
             <FaBell className="text-xl" />
             {unreadNotifications > 0 && (
               <span className="absolute top-0 right-0 bg-yellow-500 text-green-800 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-=======
-          <button className="p-2 relative rounded-full hover:bg-gray-100">
-            <FaBell className="text-xl text-gray-600" />
-            {unreadNotifications > 0 && (
-              <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
                 {unreadNotifications}
               </span>
             )}
           </button>
           
-<<<<<<< HEAD
-=======
-          <button className="p-2 relative rounded-full hover:bg-gray-100">
-            <FaEnvelope className="text-xl text-gray-600" />
-          </button>
-          
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
           {/* User dropdown */}
           <div className="relative">
             <button 
               onClick={() => setShowDropdown(!showDropdown)}
               className="flex items-center space-x-2 focus:outline-none"
             >
-<<<<<<< HEAD
               <div className="w-9 h-9 rounded-full bg-yellow-400 text-green-800 flex items-center justify-center">
                 {user?.profileImage ? (
                   <img 
@@ -181,20 +119,10 @@ const DashboardHeader = ({ toggleSidebar }) => {
               </div>
               <span className="hidden md:inline text-sm font-medium">
                 {user?.name || 'Farmer'}
-=======
-              <div className="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center">
-                <span className="text-indigo-700 font-medium">
-                  {user?.name?.charAt(0).toUpperCase() || 'U'}
-                </span>
-              </div>
-              <span className="hidden md:inline text-sm font-medium text-gray-700">
-                {user?.name || 'User'}
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
               </span>
             </button>
             
             {showDropdown && (
-<<<<<<< HEAD
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-green-200">
                 <div className="px-4 py-2 text-sm text-green-800 border-b border-green-100">
                   <div className="font-medium">{user?.name || 'Farmer'}</div>
@@ -211,20 +139,6 @@ const DashboardHeader = ({ toggleSidebar }) => {
                   className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-green-50"
                 >
                   <FaSignOutAlt className="inline mr-2 text-green-600" /> Logout
-=======
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                <Link
-                  to="/farmer/settings"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  <FaCog className="inline mr-2" /> Settings
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  <FaSignOutAlt className="inline mr-2" /> Logout
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
                 </button>
               </div>
             )}
@@ -235,19 +149,11 @@ const DashboardHeader = ({ toggleSidebar }) => {
       {/* Mobile search - shows only on small screens */}
       <div className="md:hidden px-4 pb-3">
         <form onSubmit={handleSearch} className="relative">
-<<<<<<< HEAD
           <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-200" />
           <input
             type="text"
             placeholder="Search farm items..."
             className="pl-10 pr-4 py-2 w-full bg-green-600 text-white placeholder-green-200 border border-green-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:border-transparent"
-=======
-          <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search..."
-            className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />

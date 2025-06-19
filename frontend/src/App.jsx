@@ -12,15 +12,10 @@ import FarmerProtectedRoute from "./components/RouteProtected/Farmer/FarmerProte
 
 import FarmerProfile from "./pages/Farmer/FarmerProfile";
 import CreateFarmerProfile from "./pages/Farmer/CreateFarmerProfile";
-<<<<<<< HEAD
+
 import Update_farm from "./pages/Farmer/Update_Farm";
 import AddProducts from "./components/Dashboard/Farmer/Products/AddProducts";
 import ManageProducts from "./components/Dashboard/Farmer/Products/ManageProducts";
-=======
-import Update_farm from "./pages/Farmer/Update_Farm"
-import AddProducts from "./components/Dashboard/Farmer/Products/AddProducts"
-import ManageProducts from "./components/Dashboard/Farmer/Products/ManageProducts"
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
 
 import TransporterProfile from "./pages/Transporter/TransporterProfile";
 import BuyerProfile from "./pages/Buyer/BuyerProfile";
@@ -30,8 +25,6 @@ import ContactPage from "./pages/Contact";
 
 import ProductsList from "./components/Products/ProductList/ProductsList";
 
-import ProductsList from "./components/Products/ProductList/ProductsList"
-
 function App() {
   return (
     <Router>
@@ -40,14 +33,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="getallproducts" element={<ProductsList />} />
-        
-
-        <>
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-        </>
-        <Route path="getallproducts" element={<ProductsList />} />
+        <Route path="/getallproducts" element={<ProductsList />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
 
         {/* Farmer Routes */}
         <Route
@@ -82,11 +70,7 @@ function App() {
             </FarmerProtectedRoute>
           }
         />
-<<<<<<< HEAD
         <Route
-=======
-         <Route
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
           path="/products/addproductsByFarmer"
           element={
             <ProtectedRoute allowedRoles={["farmer"]}>
@@ -94,11 +78,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-<<<<<<< HEAD
         <Route
-=======
-         <Route
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
           path="/products/manage"
           element={
             <ProtectedRoute allowedRoles={["farmer"]}>
@@ -106,10 +86,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-<<<<<<< HEAD
-=======
-        
->>>>>>> 989a5393678c0cde4e84b993cff53b54cbe425bb
 
         {/* Buyer Routes */}
         <Route

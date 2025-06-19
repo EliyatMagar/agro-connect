@@ -11,7 +11,6 @@ import DashboardHeader from "./DashboardHeader";
 import Sidebar from "./Sidebar";
 import StatsCard from "./StatsCard";
 
-// Main Dashboard Component
 const FarmerDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [products, setProducts] = useState([]);
@@ -58,7 +57,7 @@ const FarmerDashboard = () => {
   };
 
   return (
-    <div className="flex h-screen bg-green-50">
+    <div className="flex h-screen bg-gray-50">
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -66,9 +65,6 @@ const FarmerDashboard = () => {
 
         <main className="flex-1 overflow-y-auto p-6">
           <div className="mb-6">
-            {/* Both versions merged */}
-            <h1 className="text-2xl font-bold text-green-800">Dashboard Overview</h1>
-            <p className="text-green-600">Welcome back! Here's what's happening with your farm products.</p>
             <h1 className="text-2xl font-bold text-gray-800">Dashboard Overview</h1>
             <p className="text-gray-600">Welcome back! Here's what's happening with your farm products.</p>
           </div>
@@ -78,25 +74,25 @@ const FarmerDashboard = () => {
             <StatsCard 
               title="Total Products" 
               value={products.length} 
-              icon={<FaBox />} 
+              icon={<FaBox className="text-gray-500" />} 
               color="bg-gradient-to-r from-green-50 to-green-100"
             />
             <StatsCard 
               title="Available" 
               value={products.filter(p => p.Status === 'available').length} 
-              icon={<FaBox />} 
+              icon={<FaBox className="text-green-500" />} 
               color="bg-gradient-to-r from-lime-50 to-lime-100"
             />
             <StatsCard 
               title="Out of Stock" 
               value={products.filter(p => p.Status !== 'available').length} 
-              icon={<FaBox />} 
+              icon={<FaBox className="text-red-500" />} 
               color="bg-gradient-to-r from-red-50 to-red-100"
             />
             <StatsCard 
               title="Categories" 
               value={new Set(products.map(p => p.category)).size} 
-              icon={<FaBox />} 
+              icon={<FaBox className="text-teal-500" />} 
               color="bg-gradient-to-r from-teal-50 to-teal-100"
             />
           </div>
@@ -104,26 +100,14 @@ const FarmerDashboard = () => {
           {/* Products Section */}
           <div className="mb-6">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
-              {/* Merged version of both styles */}
-              <h2 className="text-xl font-semibold text-green-800">Your Products</h2>
               <h2 className="text-xl font-semibold text-gray-800">Your Products</h2>
               
               <div className="relative w-full md:w-64">
-                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-400" />
                 <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                
                 <input
                   type="text"
                   placeholder="Search products..."
-                  className="pl-10 pr-4 py-2 border border-green-200 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-300"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  className="pl-10 pr-4 py-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="pl-10 pr-4 py-2 border border-gray-200 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -136,8 +120,6 @@ const FarmerDashboard = () => {
               loading={loading} 
             />
           </div>
-
-          {/* Recent Activity or other sections can be added here */}
         </main>
       </div>
     </div>
