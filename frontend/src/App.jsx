@@ -16,6 +16,8 @@ import CreateFarmerProfile from "./pages/Farmer/CreateFarmerProfile";
 import Update_farm from "./pages/Farmer/Update_Farm";
 import AddProducts from "./components/Dashboard/Farmer/Products/AddProducts";
 import ManageProducts from "./components/Dashboard/Farmer/Products/ManageProducts";
+import EditProductById from "./components/Dashboard/Farmer/Products/EditProductById";
+import FarmerProductById from "./components/Dashboard/Farmer/Products/FarmerProductById"
 
 import TransporterProfile from "./pages/Transporter/TransporterProfile";
 import BuyerProfile from "./pages/Buyer/BuyerProfile";
@@ -83,6 +85,22 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={["farmer"]}>
               <ManageProducts />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/products/edit/:id"
+          element={
+            <ProtectedRoute allowedRoles={["farmer"]}>
+              <EditProductById />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/products/productsDetailsById/:id"
+          element={
+            <ProtectedRoute allowedRoles={["farmer"]}>
+              <FarmerProductById />
             </ProtectedRoute>
           }
         />

@@ -21,7 +21,7 @@ const FarmerDashboard = () => {
     const fetchProducts = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:8080/products/user', {
+        const response = await axios.get('http://localhost:8080/products/me', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setProducts(response.data);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch, FaEdit, FaTrash, FaPlusCircle, FaBox } from 'react-icons/fa';
 import axios from 'axios';
 import FarmerSidebar from '../Sidebar';
@@ -10,12 +10,13 @@ const ManageProducts = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:8080/products/user', {
+        const response = await axios.get('http://localhost:8080/products/me', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setProducts(response.data);
@@ -41,6 +42,10 @@ const ManageProducts = () => {
         console.error('Error deleting product:', error);
       }
     }
+  };
+
+  const handleProductClick = (productId) => {
+    navigate(`/products/productsDetailsById/${productId}`);
   };
 
   const filteredProducts = products.filter(product => 
@@ -122,7 +127,10 @@ const ManageProducts = () => {
                     {filteredProducts.map((product) => (
                       <tr key={product.ID} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
+                          <div 
+                            className="flex items-center cursor-pointer"
+                            onClick={() => handleProductClick(product.ID)}
+                          >
                             {product.image_url && (
                               <div className="flex-shrink-0 h-10 w-10">
                                 <img 
@@ -137,7 +145,9 @@ const ManageProducts = () => {
                               </div>
                             )}
                             <div className="ml-4">
-                              <div className="text-sm font-medium text-gray-900">{product.name_en}</div>
+                              <div className="text-sm font-medium text-gray-900 hover:text-indigo-600">
+                                {product.name_en}
+                              </div>
                               {product.name_np && (
                                 <div className="text-sm text-gray-500">{product.name_np}</div>
                               )}
