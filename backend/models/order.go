@@ -13,7 +13,7 @@ type Order struct {
 	BuyerID   uint   `json:"buyer_id"`
 	ProductID uint   `json:"product_id"`
 	OrderDate string `json:"order_date"`
-	Status    string `gorm:"default:'processing'"` // completed, canceled
+	Status    string `gorm:"type:order_status;default:'processing'"` // processing, completed, canceled
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

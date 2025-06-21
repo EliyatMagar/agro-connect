@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import Home from "./pages/Home";
 import Login from "./pages/LoginPage";
 import Register from "./pages/SignupPage";
@@ -7,24 +8,24 @@ import FarmerDashboard from "./components/Dashboard/Farmer/FarmerDashboard";
 import BuyerDashboard from "./components/Dashboard/Buyer/BuyerDashboard";
 import TransporterDashboard from "./components/Dashboard/Transporter/TransporterDashboard";
 
-import ProtectedRoute from "./components/ProtectedRoute"; // general login + role check
-import FarmerProtectedRoute from "./components/RouteProtected/Farmer/FarmerProtectedRoute"; // checks profile
+import ProtectedRoute from "./components/ProtectedRoute"; // login & role check
+import RoleProtectedRoute from "./components/RouteProtected/RoleProtectedRoute"; // profile existence check
 
 import FarmerProfile from "./pages/Farmer/FarmerProfile";
 import CreateFarmerProfile from "./pages/Farmer/CreateFarmerProfile";
-
 import Update_farm from "./pages/Farmer/Update_Farm";
 import AddProducts from "./components/Dashboard/Farmer/Products/AddProducts";
 import ManageProducts from "./components/Dashboard/Farmer/Products/ManageProducts";
 import EditProductById from "./components/Dashboard/Farmer/Products/EditProductById";
-import FarmerProductById from "./components/Dashboard/Farmer/Products/FarmerProductById"
+import FarmerProductById from "./components/Dashboard/Farmer/Products/FarmerProductById";
 
 import TransporterProfile from "./pages/Transporter/TransporterProfile";
 import BuyerProfile from "./pages/Buyer/BuyerProfile";
+import CreateBuyerProfile from "./pages/Buyer/CreateBuyerProfile";
+
 import NotFound from "./pages/NotFound";
 import AboutPage from "./pages/About";
 import ContactPage from "./pages/Contact";
-
 import ProductsList from "./components/Products/ProductList/ProductsList";
 
 function App() {
@@ -51,25 +52,25 @@ function App() {
         <Route
           path="/farmer-profile"
           element={
-            <FarmerProtectedRoute>
+            <RoleProtectedRoute allowedRoles={["farmer"]}>
               <FarmerProfile />
-            </FarmerProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
         <Route
           path="/update-farm"
           element={
-            <FarmerProtectedRoute>
+            <RoleProtectedRoute allowedRoles={["farmer"]}>
               <Update_farm />
-            </FarmerProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
         <Route
           path="/farmer-dashboard"
           element={
-            <FarmerProtectedRoute>
+            <RoleProtectedRoute allowedRoles={["farmer"]}>
               <FarmerDashboard />
-            </FarmerProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
         <Route
@@ -109,16 +110,24 @@ function App() {
         <Route
           path="/buyer-dashboard"
           element={
-            <ProtectedRoute allowedRoles={["buyer"]}>
+            <RoleProtectedRoute allowedRoles={["buyer"]}>
               <BuyerDashboard />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
         <Route
           path="/buyer-profile"
           element={
-            <ProtectedRoute allowedRoles={["buyer"]}>
+            <RoleProtectedRoute allowedRoles={["buyer"]}>
               <BuyerProfile />
+            </RoleProtectedRoute>
+          }
+        />
+        <Route
+          path="/create-buyer-profile"
+          element={
+            <ProtectedRoute allowedRoles={["buyer"]}>
+              <CreateBuyerProfile />
             </ProtectedRoute>
           }
         />
@@ -127,17 +136,17 @@ function App() {
         <Route
           path="/transporter-dashboard"
           element={
-            <ProtectedRoute allowedRoles={["transporter"]}>
+            <RoleProtectedRoute allowedRoles={["transporter"]}>
               <TransporterDashboard />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
         <Route
           path="/transporter-profile"
           element={
-            <ProtectedRoute allowedRoles={["transporter"]}>
+            <RoleProtectedRoute allowedRoles={["transporter"]}>
               <TransporterProfile />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
 

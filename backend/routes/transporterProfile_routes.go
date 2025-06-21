@@ -9,13 +9,13 @@ import (
 
 func RegisterTransporterRoutes(r *gin.Engine) {
 	// Group routes for authenticated transporters
-	transporter := r.Group("/transporter")
+	transporter := r.Group("/transporter-profile")
 	transporter.Use(middleware.AuthMiddleware(), middleware.TransporterOnly()) // Custom middleware for transporter role
 	{
-		transporter.POST("/profile", controllers.CreateTransporterProfile)
-		transporter.GET("/profile/:user_id", controllers.GetTransporterProfileID)
-		transporter.PUT("/profile/:user_id", controllers.UpdateTransporterProfile)
-		transporter.DELETE("/profile/:user_id", controllers.DeleteTransporterProfile)
+		transporter.POST("/", controllers.CreateTransporterProfile)
+		transporter.GET("/:user_id", controllers.GetTransporterProfileID)
+		transporter.PUT("/:user_id", controllers.UpdateTransporterProfile)
+		transporter.DELETE("/:user_id", controllers.DeleteTransporterProfile)
 	}
 
 	// Admin routes to manage all transporter profiles

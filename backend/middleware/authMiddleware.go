@@ -8,12 +8,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// AuthMiddleware verifies JWT and sets claims in context
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
-		if authHeader == "" || !strings.HasPrefix(authHeader, "Bearer ") {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization header missing or invalid"})
+		if authHeader == "" {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization header is required"})
+			c.Abort()
+			return
+		}
+
+		if !strings.HasPrefix(authHeader, "Bearer ") {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization header must start with 'Bearer '"})
 			c.Abort()
 			return
 		}
@@ -22,20 +27,21 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		claims, err := utils.ValidateJWT(tokenStr)
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token", "details": err.Error()})
 			c.Abort()
 			return
 		}
 
-		// Set claims in context for downstream access
-		c.Set("userID", claims.UserID)
+		// Set claims in context using consistent naming
+		c.Set("userID", claims.UserID) // Changed to userID (camelCase)
 		c.Set("role", claims.Role)
+		c.Set("claims", claims)
 
 		c.Next()
 	}
 }
 
-// AdminOnly middleware
+// Role-checking middlewares
 func AdminOnly() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		role, exists := c.Get("role")
@@ -48,20 +54,6 @@ func AdminOnly() gin.HandlerFunc {
 	}
 }
 
-// FarmerOnly middleware
-func FarmerOnly() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		role, exists := c.Get("role")
-		if !exists || role != "farmer" {
-			c.JSON(http.StatusForbidden, gin.H{"error": "Access denied. Farmers only."})
-			c.Abort()
-			return
-		}
-		c.Next()
-	}
-}
-
-// BuyerOnly middleware
 func BuyerOnly() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		role, exists := c.Get("role")
@@ -74,15 +66,48 @@ func BuyerOnly() gin.HandlerFunc {
 	}
 }
 
-// TransporterOnly middleware
-func TransporterOnly() gin.HandlerFunc {
+func FarmerOnly() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		role, exists := c.Get("role")
-		if !exists || role != "transporter" {
-			c.JSON(http.StatusForbidden, gin.H{"error": "Access denied. Transporter only."})
+		if !exists || role != "farmer" {
+			c.JSON(http.StatusForbidden, gin.H{"error": "Access denied. Farmers only."})
 			c.Abort()
 			return
 		}
 		c.Next()
+	}
+}
+
+func TransporterOnly() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		role, exists := c.Get("role")
+		if !exists || role != "transporter" {
+			c.JSON(http.StatusForbidden, gin.H{"error": "Access denied. Transporters only."})
+			c.Abort()
+			return
+		}
+		c.Next()
+	}
+}
+
+// In middleware package
+func RolesAllowed(roles ...string) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		userRole, exists := c.Get("role")
+		if !exists {
+			c.JSON(http.StatusForbidden, gin.H{"error": "Role information missing"})
+			c.Abort()
+			return
+		}
+
+		for _, allowedRole := range roles {
+			if userRole == allowedRole {
+				c.Next()
+				return
+			}
+		}
+
+		c.JSON(http.StatusForbidden, gin.H{"error": "Insufficient permissions"})
+		c.Abort()
 	}
 }

@@ -8,6 +8,7 @@ import (
 
 type Offer struct {
 	gorm.Model
+	UserID     uint    `json:"user_id"`
 	BuyerID    uint    `json:"buyer_id"`
 	ProductID  uint    `json:"product_id"`
 	Quantity   float64 `json:"quantity"`
